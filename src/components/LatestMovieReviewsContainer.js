@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 import 'isomorphic-fetch';
 import MovieReviews from './MovieReviews'
 
@@ -16,14 +16,9 @@ export default class LatestMovieReviewsContainer extends React.Component {
         fetch(URL)
         .then(res => res.json())
         .then(data => {
-            this.setState({ reviews: data.results.forEach (result => this.state.reviews.push(result.summary_short)) })
-        // this.setState({ reviews: data.results.map( review => ({ review: review.summary_short  })) })
-        // this.setState({ review: data })
+        this.setState({ reviews: data.results.map( reviewObj => ( reviewObj.summary_short  )) })        
       })
-
     }
-
-
 
     componentDidMount() {
         this.fetchFromNYTApi()
@@ -34,8 +29,9 @@ export default class LatestMovieReviewsContainer extends React.Component {
             <div 
             
             className='latest-movie-reviews'>
-                hello
-                {this.state.reviews.map((review, id) => <h1 key={id}>{review}</h1>)}
+                {/* {this.state.reviews.map((review, id) => <h1 key={id}>{review}</h1>)} */}
+                {/* {this.state.reviews} */}
+                <MovieReviews moviesReviews={this.state.reviews}/>
             </div>
         )
     }
