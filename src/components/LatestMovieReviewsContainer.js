@@ -16,7 +16,9 @@ export default class LatestMovieReviewsContainer extends React.Component {
         fetch(URL)
         .then(res => res.json())
         .then(data => {
-        this.setState({ reviews: data.results.map( reviewObj => ( reviewObj.summary_short  )) })        
+        this.setState({
+            reviews: data.results
+        })     
       })
     }
 
@@ -29,9 +31,10 @@ export default class LatestMovieReviewsContainer extends React.Component {
             <div 
             
             className='latest-movie-reviews'>
+                
                 {/* {this.state.reviews.map((review, id) => <h1 key={id}>{review}</h1>)} */}
                 {/* {this.state.reviews} */}
-                <MovieReviews moviesReviews={this.state.reviews}/>
+                <MovieReviews reviews={this.state.reviews}/>
             </div>
         )
     }
