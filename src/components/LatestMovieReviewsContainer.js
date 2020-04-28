@@ -18,7 +18,6 @@ class LatestMovieReviewsContainer extends Component {
     fetch(URL)
       .then(resp => resp.json())
       .then(data => {
-        debugger
         this.setState = ({
           reviews: data.results
 
