@@ -26,7 +26,6 @@ class SearchableMovieReviewsContainer extends Component {
     fetch(URL + "&query=" + this.state.searchTerm)
       .then(resp => resp.json())
       .then(data => {
-        debugger
         this.setState = ({
           reviews: data
         })
