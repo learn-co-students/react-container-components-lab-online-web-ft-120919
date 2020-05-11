@@ -8,32 +8,42 @@ const URL = 'https://api.nytimes.com/svc/movies/v2/reviews/search.json?'
 
 // Code SearchableMovieReviewsContainer Here
 
-class SearchableMovieReviewsContainer extends React.Component {
+class SearchableMovieReviewsContainer extends Component {
+    state = {
+      searchTerm: "",
+      reviews: [],
+    };
 
-    constructor(props){
-        super(props);
-        this.state = {
-            reviews: [],
-            searchTerm: ''
-        };
+    handleSearchInputChange = (event) =>
+      this.setState({ searchTerm: event.target.value });
+
+    handleSubmit = (event) => {
+      event.preventDefault();
+
+      fetch(BASE_URL.concat(this.state.searchTerm))
+        .then((res) => res.json())
+        .then((res) => this.setState({ reviews: res.results }));
+    };
+
+    render() {
+      return (
+        <div className="searchable-movie-reviews">
+          <form onSubmit={this.handleSubmit}>
+            <label htmlFor="search-input">Search Movie Reviews</label>
+            <input
+              id="search-input"
+              type="text"
+              style={{ width: 300 }}
+              onChange={this.handleSearchInputChange}
+            />
+            <button type="submit">Submit</button>
+          </form>
+          {typeof this.state.reviews === "object" &&
+            this.state.reviews.length > 0 && <h2>Movie Review By Search:</h2>}
+          <MovieReviews reviews={this.state.reviews} />
+        </div>
+      );
     }
+  }
 
-    componentDidMount(){
-        fetch (URL)
-        .then(response => response.json())
-        .then( data => this.setState({ reviews: data.review }))
-    }
-
-    // renderReviews = () => {
-    //     return this.state.reviews.map(review =>{
-            
-    //     })
-    // }
-render(){
-    return(
-        <div></div>
-    )
-}
-}
-
-export default SearchableMovieReviewsContainer
+  export default SearchableMovieReviewsContainer;
